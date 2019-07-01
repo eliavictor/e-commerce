@@ -22,7 +22,8 @@
     },
     methods: {
       addToCart(id) {
-        // MAX AMOUNT
+        if (localStorage.getItem('token')) {
+          // MAX AMOUNT
           let products = this.$store.state.products
           let maxAmount = 0
           for (let i = 0; i < products.length; i++) {
@@ -103,12 +104,19 @@
           .catch(err => {
             console.log(err)
             Swal.fire({
-                title: 'Failed to find product!',
-                text: `${err.message}`,
-                type: 'error',
-                confirmButtonText: 'Ok'
+              title: 'Failed to find product!',
+              text: `${err.message}`,
+              type: 'error',
+              confirmButtonText: 'Ok'
             })
           })
+        } else {
+          Swal.fire({
+            title: 'Signin first for add product to cart!',
+            type: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
       }
     }
   }
